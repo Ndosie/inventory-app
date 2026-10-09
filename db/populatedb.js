@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS categories (
   ) STORED,
 
   name VARCHAR (255) NOT NULL,
-  created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS units (
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS units (
   ) STORED,
 
   name VARCHAR (255) NOT NULL,
-  created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS locations (
@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS locations (
   ) STORED,
 
   name VARCHAR (255) NOT NULL,
-  created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS items (
@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS items (
   photo_url TEXT NOT NULL,
   unit_id TEXT NOT NULL,
   category_id TEXT NOT NULL,
-  location JSON,
-  created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ,
+  quantity INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
 
   CONSTRAINT fk_unit_id FOREIGN KEY (unit_id) REFERENCES units (id),
   CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES locations (id)
@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS item_locs (
   item_id TEXT NOT NULL,
   location_id TEXT NOT NULL,
   quantity INTEGER NOT NULL,
-  created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
 
   CONSTRAINT fk_item_id FOREIGN KEY (item_id) REFERENCES items (id),
   CONSTRAINT fk_location_id FOREIGN KEY (location_id) REFERENCES locations (id)
